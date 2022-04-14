@@ -3,9 +3,8 @@ pipeline {
     stages{
         stage('Preparation') { // for display purposes
             steps {
-                sh "export TAG=$(grep \'Welcome to nginx \' index.html | awk \'{print $4}\' | awk -F \'!\' \'{print $1}\')"
-                sh 'ls'
-                sh "docker build -t sample-app:${TAG} ."
+                sh "grep \'Welcome to nginx \' index.html | awk \'{print $4}\' | awk -F \'!\' \'{print $1}\'"
+                //sh "docker build -t sample-app:${TAG} ."
                 // script {
                 //     docker.image("nginx").run('--net="custom" --name nginx')
                 // }
