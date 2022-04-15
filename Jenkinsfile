@@ -18,12 +18,13 @@ pipeline {
                 archiveArtifacts artifacts: 'sample-app-grype.txt'
             }
         }
-        stage('Efficiency Metrics') {
-            steps{
-                sh 'CI=true dive sample-app:dev | tee sample-app-dive.txt'
-                archiveArtifacts artifacts: 'sample-app-dive.txt'
-            }
-        }
+        // no dive for arm64 :(
+        // stage('Efficiency Metrics') {
+        //     steps{
+        //         sh 'CI=true dive sample-app:dev | tee sample-app-dive.txt'
+        //         archiveArtifacts artifacts: 'sample-app-dive.txt'
+        //     }
+        // }
         stage('Push Images') {
             steps{
                 script {
