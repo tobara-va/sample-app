@@ -5,8 +5,9 @@ pipeline {
             steps {
                 sh 'bash scripts/build.sh'
                 VER_TAG = sh (
-                    script: 'docker image ls --format \'table {{.Tag}}\' sample-app | sed -n \'2 p\''
-                )
+                    script: 'docker image ls --format \'table {{.Tag}}\' sample-app | sed -n \'2 p\'',
+                    returnStatus: true
+                ).trim()
                 // script {
                 //     docker.image("nginx").run('--net="custom" --name nginx')
                 // }
