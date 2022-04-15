@@ -14,7 +14,7 @@ pipeline {
         }
         stage('Scan SBOM') {
             steps{
-                sh 'grype sbom:sample-app-sbom.json --file sample-app-grype.txt --fail-on critical'
+                sh 'grype sbom:sample-app-sbom.json --file sample-app-grype.txt --fail-on high'
                 archiveArtifacts artifacts: 'sample-app-grype.txt'
             }
         }
