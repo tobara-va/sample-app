@@ -11,8 +11,8 @@ pipeline {
         }
         stage('Push Image') {
             steps{
-                TAG="dev"
                 script {
+                    TAG = "dev"
                     docker.withRegistry( 'https://registry.obara.xyz', '689b33b5-2795-4052-9561-b7c636e23e96' ) {
                         image = docker.image("sample-app:${TAG}")
                         image.push()
