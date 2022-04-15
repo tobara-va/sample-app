@@ -3,11 +3,7 @@ pipeline {
     stages{
         stage('Preparation') { // for display purposes
             steps {
-                sh '''
-                    bash scripts/get-tag.sh
-                    echo ${TAG}
-                    docker build -t sample-app:${TAG} .
-                '''
+                sh 'bash scripts/build.sh'
                 // script {
                 //     docker.image("nginx").run('--net="custom" --name nginx')
                 // }
