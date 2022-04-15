@@ -9,16 +9,15 @@ pipeline {
         stage('Push Images') {
             steps{
                 script {
-                    VERTAG = sh (
+                    env.VERTAG = sh (
                         script: 'docker image ls --format \'table {{.Tag}}\' sample-app | sed -n \'2 p\'',
                         returnStdout: true
-                    )
+                    ).trim()
                     echo "The latest tag is ${VERTAG}"
-                    env.VERTAG = "${VERTAG}"
                     docker.withRegistry( 'https://registry.obara.xyz', '689b33b5-2795-4052-9561-b7c636e23e96' ) {
                         def customImage = docker.image("sample-app:dev")
                         customImage.push("dev")
-                        customImage.push("${VERTAG}")
+                        //customImage.push("${VERTAG}")
                     }
                 }
             }
