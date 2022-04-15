@@ -10,14 +10,14 @@ pipeline {
             }
         }
     }
-    // stage('Push Image') {
-    //     steps{
-    //         script {
-    //             docker.withRegistry( 'https://registry.obara.xyz', '689b33b5-2795-4052-9561-b7c636e23e96' ) {
-    //                 image = docker.image('sample-app:0.0.1')
-    //                 image.push()
-    //             }
-    //         }
-    //     }
-    // }
+    stage('Push Image') {
+        steps{
+            script {
+                docker.withRegistry( 'https://registry.obara.xyz', '689b33b5-2795-4052-9561-b7c636e23e96' ) {
+                    image = docker.image('sample-app:dev')
+                    image.push()
+                }
+            }
+        }
+    }
 }
