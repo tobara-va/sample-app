@@ -4,16 +4,6 @@ pipeline {
         stage('Build Images') { // for display purposes
             steps {
                 sh 'bash scripts/build.sh'
-                script {
-                    VER_TAG = sh (
-                        script: 'docker image ls --format \'table {{.Tag}}\' sample-app | sed -n \'2 p\'',
-                        returnStatus: true
-                    )
-                    echo ${VER_TAG}
-                }
-                // script {
-                //     docker.image("nginx").run('--net="custom" --name nginx')
-                // }
             }
         }
         stage('Push Images') {
