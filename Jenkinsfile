@@ -17,7 +17,7 @@ pipeline {
                     docker.withRegistry( 'https://registry.obara.xyz', '689b33b5-2795-4052-9561-b7c636e23e96' ) {
                         image = docker.image("sample-app:dev")
                         image.push()
-                        image = docker.image("sample-app:${env.VER_TAG}")
+                        image = docker.image('sample-app:${VER_TAG}')
                         image.push()
                     }
                 }
