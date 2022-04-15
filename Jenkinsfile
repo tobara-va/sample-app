@@ -14,6 +14,7 @@ pipeline {
                         returnStdout: true
                     )
                     echo "The latest tag is ${VER_TAG}"
+                    env.VER_TAG = "${VER_TAG}"
                     docker.withRegistry( 'https://registry.obara.xyz', '689b33b5-2795-4052-9561-b7c636e23e96' ) {
                         image = docker.image("sample-app:dev")
                         image.push()
