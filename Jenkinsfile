@@ -1,22 +1,24 @@
 pipeline {
     agent { label 'VMagent' }
     stages{
-        stage('Preparation') { // for display purposes
+        stage('Build Images') { // for display purposes
             steps {
                 sh 'bash scripts/build.sh'
+                VER_TAG = sh (
+                    script: 'docker image ls --format \'table {{.Tag}}\' sample-app | sed -n \'2 p\''
+                )
                 // script {
                 //     docker.image("nginx").run('--net="custom" --name nginx')
                 // }
             }
         }
-        stage('Push Image') {
+        stage('Push Images') {
             steps{
                 script {
-                    TAG = "dev"
                     docker.withRegistry( 'https://registry.obara.xyz', '689b33b5-2795-4052-9561-b7c636e23e96' ) {
-                        image = docker.image("sample-app:${TAG}")
+                        image = docker.image("sample-app:dev")
                         image.push()
-                        image = docker.image("sample-app:0.0.1")
+                        image = docker.image("sample-app:${VER_TAG}")
                         image.push()
                     }
                 }
