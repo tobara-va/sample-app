@@ -8,7 +8,7 @@ pipeline {
                     VER_TAG = sh (
                         script: 'docker image ls --format \'table {{.Tag}}\' sample-app | sed -n \'2 p\'',
                         returnStatus: true
-                    ).trim()
+                    )
                     echo ${VER_TAG}
                 }
                 // script {
