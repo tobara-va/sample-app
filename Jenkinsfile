@@ -18,7 +18,7 @@ pipeline {
                     docker.withRegistry( 'https://registry.obara.xyz', '689b33b5-2795-4052-9561-b7c636e23e96' ) {
                         def customImage = docker.image("sample-app")
                         customImage.push("dev")
-                        customImage.push("${env.VERTAG}")
+                        //customImage.push("${env.VERTAG}")
                     }
                 }
             }
