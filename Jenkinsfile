@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'VMagent' }
+    agent { label 'PiAgent' }
     stages{
         stage('Build Images') { // for display purposes
             steps {
