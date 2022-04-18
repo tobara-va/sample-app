@@ -18,13 +18,12 @@ pipeline {
                 archiveArtifacts artifacts: 'sample-app-grype.txt'
             }
         }
-        // no dive for arm64 :(
-        // stage('Efficiency Metrics') {
-        //     steps{
-        //         sh 'CI=true dive sample-app:dev | tee sample-app-dive.txt'
-        //         archiveArtifacts artifacts: 'sample-app-dive.txt'
-        //     }
-        // }
+        stage('Efficiency Metrics') {
+            steps{
+                sh 'docker run -v /var/run/docker.sock:/var/run/docker.sock jauderho/dive --ci sample-app:dev'
+                archiveArtifacts artifacts: 'sample-app-dive.txt'
+            }
+        }
         stage('Push Images') {
             steps{
                 script {
