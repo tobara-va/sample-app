@@ -1,6 +1,11 @@
 pipeline {
     agent { label 'PiAgent' }
     stages{
+        stag('Info') {
+            steps {
+                echo "Working on tag $TAG_NAME"
+            }
+        }
         stage('Build Images') { // for display purposes
             steps {
                 sh 'bash scripts/build.sh'
