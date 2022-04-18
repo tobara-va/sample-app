@@ -1,7 +1,7 @@
 pipeline {
     agent { label 'PiAgent' }
     stages{
-        stag('Info') {
+        stage('Info') {
             steps {
                 echo "Working on tag $TAG_NAME"
             }
