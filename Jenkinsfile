@@ -20,7 +20,7 @@ pipeline {
         }
         stage('Efficiency Metrics') {
             steps{
-                sh 'scripts/dive.sh'
+                sh 'bash scripts/dive.sh'
                 archiveArtifacts artifacts: 'sample-app-dive.txt'
             }
         }
