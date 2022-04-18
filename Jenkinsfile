@@ -20,7 +20,7 @@ pipeline {
         }
         stage('Efficiency Metrics') {
             steps{
-                sh 'bash scripts/dive.sh'
+                sh 'docker run -v /var/run/docker.sock:/var/run/docker.sock jauderho/dive --ci sample-app:dev >> sample-app-dive.txt'
                 archiveArtifacts artifacts: 'sample-app-dive.txt'
             }
         }
