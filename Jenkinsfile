@@ -27,7 +27,7 @@ pipeline {
         }
         stage('Check Git Secrets') {            
             steps {                              
-                sh 'docker run -it -v "$PWD:/pwd" trufflesecurity/trufflehog:latest github --repo https://github.com/tobara8/sample-app.git > sample-app-trufflehog.txt'                
+                sh 'docker run --platform linux/arm64 -v "$PWD:/pwd" trufflesecurity/trufflehog:latest github -j --repo https://github.com/tobara8/sample-app.git > sample-app-trufflehog.txt'                
                 archiveArtifacts artifacts: 'sample-app-trufflehog.txt'            
             }        
         }
