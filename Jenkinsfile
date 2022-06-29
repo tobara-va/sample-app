@@ -21,7 +21,7 @@ pipeline {
         stage('Efficiency Metrics') {
             steps{
                 sh 'printf "rules:\n  highestUserWastedPercent: 0.30" > dive-ci'
-                sh 'docker run -v /var/run/docker.sock:/var/run/docker.sock -v "$(pwd)/dive-ci:/config/.dive-ci" jauderho/dive --ci sample-app:dev >> sample-app-dive.txt'
+                sh 'docker run -v /var/run/docker.sock:/var/run/docker.sock -v "$(pwd)/dive-ci:/config/.dive-ci" jauderho/dive --ci i --ci-config /config/.dive-ci sample-app:dev >> sample-app-dive.txt'
                 archiveArtifacts artifacts: 'sample-app-dive.txt'
             }
         }
