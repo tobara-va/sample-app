@@ -25,6 +25,12 @@ pipeline {
                 archiveArtifacts artifacts: 'sample-app-dive.txt'
             }
         }
+        stage('Check Git Secrets') {            
+            steps {                              
+                sh 'docker run -t gesellix/trufflehog --json https://github.com/tobara8/sample-app.git > sample-app-trufflehog.txt'                
+                archiveArtifacts artifacts: 'sample-app-trufflehog.txt'            
+            }        
+        }
         stage('Push Images') {
             steps{
                 script {
