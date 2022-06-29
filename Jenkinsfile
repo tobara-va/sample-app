@@ -21,14 +21,20 @@ pipeline {
         stage('Efficiency Metrics') {
             steps{
                 sh 'printf "rules:\n  highestUserWastedPercent: 0.30" > dive-ci'
-                sh 'docker run -v /var/run/docker.sock:/var/run/docker.sock -v "$(pwd)/dive-ci:/config/.dive-ci" jauderho/dive --ci --ci-config /config/.dive-ci sample-app:dev >> sample-app-dive.txt'
+                sh 'docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$(pwd)/dive-ci:/config/.dive-ci" jauderho/dive --ci --ci-config /config/.dive-ci sample-app:dev >> sample-app-dive.txt'
                 archiveArtifacts artifacts: 'sample-app-dive.txt'
             }
         }
         stage('Check Git Secrets') {            
             steps {                              
-                sh 'docker run --platform linux/arm64 -v "$PWD:/pwd" trufflesecurity/trufflehog:latest github -j --repo https://github.com/tobara8/sample-app.git > sample-app-trufflehog.txt'                
+                sh 'docker run --rm --platform linux/arm64 -v "$PWD:/pwd" trufflesecurity/trufflehog:latest github -j --repo https://github.com/tobara8/sample-app.git > sample-app-trufflehog.txt'                
                 archiveArtifacts artifacts: 'sample-app-trufflehog.txt'            
+            }        
+        }
+        stage('Dockerfile Linting') {            
+            steps {                              
+                sh 'docker run --rm -i hadolint/hadolint < Dockerfile | tee sample-app-hadolint.txt'                
+                archiveArtifacts artifacts: 'sample-app-hadolint.txt'            
             }        
         }
         stage('Push Images') {
