@@ -1,0 +1,8 @@
+version: '3.3'
+services:
+  sample-app:
+    container_name: sample-app
+    image: registry.obara.xyz/sample-app:dev
+    environment:
+      - DBUSER=admin
+      - DBPASSWORD=secretpassword
