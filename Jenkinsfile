@@ -27,7 +27,7 @@ pipeline {
         }
         stage('Check Git Secrets') {            
             steps {                              
-                sh 'docker run --rm --platform linux/arm64 -v "$PWD:/pwd" trufflesecurity/trufflehog:latest github -j github --repo https://github.com/trufflesecurity/test_keys > sample-app-trufflehog.txt'                
+                sh 'docker run --rm --platform linux/arm64 -v "$PWD:/pwd" trufflesecurity/trufflehog:latest github -j --repo https://github.com/trufflesecurity/test_keys > sample-app-trufflehog.txt'                
                 archiveArtifacts artifacts: 'sample-app-trufflehog.txt'            
             }        
         }
