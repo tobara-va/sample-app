@@ -21,7 +21,7 @@ pipeline {
         stage('Grype Scan') {
             steps{
                 grypeScan autoInstall: true, repName: "grypeReport_${JOB_NAME}_${BUILD_NUMBER}_sample-app.csv", scanDest: 'docker:ubuntu'
-                sh 'bash scripts/grypeProcessor.sh'
+                sh sh 'bash scripts/grypeProcessor.sh'
                 archiveArtifacts artifacts: 'grypeFindings.txt'
             }
         }        
