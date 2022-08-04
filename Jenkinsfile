@@ -20,7 +20,7 @@ pipeline {
         }
         stage('Grype Scan') {
             steps{
-                grypeScan repName: sample-app_${BUILD_NUMBER}.csv, scanDest: 'docker:registry.obara.xyz/sample-app:dev'
+                grypeScan autoInstall: true, repName: sample-app_${BUILD_NUMBER}.csv, scanDest: 'docker:registry.obara.xyz/sample-app:dev'
             }
         }        
         stage('Efficiency Metrics') {
