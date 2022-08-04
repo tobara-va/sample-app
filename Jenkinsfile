@@ -18,6 +18,11 @@ pipeline {
                 archiveArtifacts artifacts: 'sample-app-grype.txt'
             }
         }
+        stage('Grype Scan') {
+            steps{
+                grypeScan repName: sample-app_${BUILD_NUMBER}.csv, scanDest: 'docker:registry.obara.xyz/sample-app:dev'
+            }
+        }        
         stage('Efficiency Metrics') {
             steps{
                 sh 'printf "rules:\n  highestUserWastedPercent: 0.30" > dive-ci'
