@@ -28,7 +28,7 @@ pipeline {
                 rm grypeFindings.txt
                 for s in "\${severityList[@]}";
                 do
-                        lc=$(grep "\$s" findings.csv | wc -l)
+                        lc=\$(grep "\$s" findings.csv | wc -l)
                         printf "\$s:\$lc findings\n" >> grypeFindings.txt
                 done
 
