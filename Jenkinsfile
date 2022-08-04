@@ -21,25 +21,7 @@ pipeline {
         stage('Grype Scan') {
             steps{
                 grypeScan autoInstall: true, repName: "grypeReport_${JOB_NAME}_${BUILD_NUMBER}_sample-app.csv", scanDest: 'docker:ubuntu'
-                sh script: """#!/bin/bash
-                readarray -t severityList < <(awk -F "\"*,\"*" '{print \$4}' grypeReport_${JOB_NAME}_${BUILD_NUMBER}_sample-app.csv | sort -u | grep -v 'Severity')
-                declare -p severityList 1>/dev/null
-
-                for s in "\${severityList[@]}";
-                do
-                        lc=\$(grep "\$s" findings.csv | wc -l)
-                        printf "\$s:\$lc findings\n" >> grypeFindings.txt
-                done
-
-                printf "\n" >> grypeFindings.txt
-
-                for s in "\${severityList[@]}";
-                do
-                    printf "#################\nSeverity: \$s\n#################\n"   >> grypeFindings.txt
-                    grep "\$s" findings.csv | sort | column -t -s, | sed 's/"//g'    >> grypeFindings.txt
-                    printf "\n"                                                     >> grypeFindings.txt
-                done
-                """, returnStdout: true
+                sh sh 'bash scripts/grypeProcessor.sh'
                 archiveArtifacts artifacts: 'grypeFindings.txt'
             }
         }        
