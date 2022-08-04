@@ -20,7 +20,7 @@ pipeline {
         }
         stage('Grype Scan') {
             steps{
-                grypeScan autoInstall: true, repName: 'grypeReport_${JOB_NAME}_${BUILD_NUMBER}_sample-app.csv', scanDest: 'docker:ubuntu'
+                grypeScan autoInstall: true, repName: 'grypeReport_$(echo JOB_NAME | sed \'s/-//\')_${BUILD_NUMBER}_sample-app.csv', scanDest: 'docker:ubuntu'
             }
         }        
         stage('Efficiency Metrics') {
