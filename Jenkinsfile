@@ -21,14 +21,14 @@ pipeline {
         stage('Grype Scan') {
             steps{
                 grypeScan autoInstall: true, repName: "grypeReport_${JOB_NAME}_${BUILD_NUMBER}_sample-app.csv", scanDest: 'docker:ubuntu'
-                sh sh 'bash scripts/grypeProcessor.sh'
+                sh 'bash scripts/grypeProcessor.sh'
                 archiveArtifacts artifacts: 'grypeFindings.txt'
             }
         }        
         stage('Efficiency Metrics') {
             steps{
                 sh 'printf "rules:\n  highestUserWastedPercent: 0.30" > dive-ci'
-                sh 'docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$(pwd)/dive-ci:/config/.dive-ci" jauderho/dive --ci --ci-config /config/.dive-ci sample-app:dev >> sample-app-dive.txt'
+                sh sh 'docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$(pwd)/dive-ci:/config/.dive-ci" jauderho/dive --ci --ci-config /config/.dive-ci sample-app:dev >> sample-app-dive.txt'
                 archiveArtifacts artifacts: 'sample-app-dive.txt'
             }
         }
