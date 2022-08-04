@@ -22,7 +22,7 @@ pipeline {
             steps{
                 grypeScan autoInstall: true, repName: "grypeReport_${JOB_NAME}_${BUILD_NUMBER}_sample-app.csv", scanDest: 'docker:ubuntu'
                 sh script: """\
-                readarray -t severityList < <(awk -F "\"*,\"*" '{print \$4}' findings.csv | sort -u | grep -v 'Severity')
+                readarray -t severityList < <(awk -F "\"*,\"*" '{print \$4}' grypeReport_${JOB_NAME}_${BUILD_NUMBER}_sample-app.csv | sort -u | grep -v 'Severity')
                 declare -p severityList 1>/dev/null
 
                 rm grypeFindings.txt
