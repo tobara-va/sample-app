@@ -25,7 +25,6 @@ pipeline {
                 readarray -t severityList < <(awk -F "\"*,\"*" '{print \$4}' grypeReport_${JOB_NAME}_${BUILD_NUMBER}_sample-app.csv | sort -u | grep -v 'Severity')
                 declare -p severityList 1>/dev/null
 
-                rm grypeFindings.txt
                 for s in "\${severityList[@]}";
                 do
                         lc=\$(grep "\$s" findings.csv | wc -l)

@@ -1,5 +1,5 @@
-FROM nginx
+FROM nginx:latest
 
-RUN apt update && apt upgrade zlib1g -y && apt-get clean
+RUN apt-get update && apt-get upgrade -y && apt-get clean
 
 COPY index.html /usr/share/nginx/html/
